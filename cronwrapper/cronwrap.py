@@ -87,12 +87,14 @@ def make_parser():
                       default="~/.bashrc")
     parser.add_option("-s", "--shell", dest="shell", help="full path of the "
                       "shell to use (default /bin/sh)")
+    return parser
 
 
 if __name__ == "__main__":
 
     # CLI parsing
-    (options, args) = make_parser()
+    parser = make_parser()
+    (options, args) = parser.parse_args()
     if len(args) == 0:
         usage()
         sys.exit(1)
