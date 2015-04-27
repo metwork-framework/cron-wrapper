@@ -77,7 +77,7 @@ def make_parser():
     parser.add_option("-l", "--lock",
                       action="store_true", dest="lock", default=True,
                       help="don't execute the command another time if still "
-                      "running")
+                      "running (default True)")
     parser.add_option("-e", "--load-env", dest="load_env", action="store_true",
                       help="load environnement file before executing command "
                       "(default: False)", default=False)
