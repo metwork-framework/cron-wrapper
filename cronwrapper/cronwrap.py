@@ -75,9 +75,9 @@ def make_parser():
                       "wait)",
                       metavar="RVALUE", type=int, default=0)
     parser.add_option("-l", "--lock",
-                      action="store_true", dest="lock", default=True,
+                      action="store_true", dest="lock", default=False,
                       help="don't execute the command another time if still "
-                      "running (default True)")
+                      "running (default False)")
     parser.add_option("-e", "--load-env", dest="load_env", action="store_true",
                       help="load environnement file before executing command "
                       "(default: False)", default=False)
@@ -90,7 +90,45 @@ def make_parser():
     return parser
 
 
-if __name__ == "__main__":
+def random_sleep(random_sleep):
+    if random_sleep != 0:
+        random_int = random.randint(0, random_sleep)
+        time.sleep(random_int)
+
+
+def execute_command(command, shell):
+    kwargs = {"shell": True}
+    if shell:
+        kwargs['executable'] = shell
+    process = subprocess.Popen(command, **kwargs)
+    return process
+
+
+def make_command(original_command, load_env, load_env_file):
+    if load_env:
+        command = "source %s >/dev/null 2>&1 ; %s" % (load_env_file,
+                                                      original_command)
+    else:
+        command = original_command
+    return command
+
+
+def wait_for_completion_or_kill(process, timeout):
+    return_code = None
+    before = datetime.datetime.now()
+    while total_seconds(datetime.datetime.now() - before) <= timeout:
+        return_code = process.poll()
+        if return_code is not None:
+            # Process has terminated
+            break
+        time.sleep(0.1)
+    if return_code is None:
+        # timeout
+        print("timeout => kill -9", file=sys.stderr)
+        process.kill()
+
+
+def main():
 
     # CLI parsing
     parser = make_parser()
@@ -100,21 +138,12 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Random sleep
-    if options.random_sleep != 0:
-        random_int = random.randint(0, options.random_sleep)
-        time.sleep(random_int)
+    random_sleep(options.random_sleep)
 
     # Command generation
     original_command = " ".join(args)
-    if options.load_env:
-        command = "source %s >/dev/null 2>&1 ; %s" % (options.load_env_file,
-                                                      original_command)
-    else:
-        command = original_command
-
-    kwargs = {"shell": True}
-    if options.shell:
-        kwargs['executable'] = options.shell
+    command = make_command(original_command, options.load_env,
+                           options.load_env_file)
 
     # Lock management
     command_hash = hashlib.md5(command).hexdigest()
@@ -125,21 +154,15 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # Command execution
-    process = subprocess.Popen(command, **kwargs)
+    process = execute_command(command, options.shell)
     if options.timeout == 0:
         process.wait()
     else:
-        return_code = None
-        before = datetime.datetime.now()
-        while total_seconds(datetime.datetime.now() - before) <= \
-                options.timeout:
-            return_code = process.poll()
-            if return_code is not None:
-                # Process has terminated
-                break
-            time.sleep(0.1)
-        if return_code is None:
-            # timeout
-            print("timeout => kill -9", file=sys.stderr)
-            process.kill()
+        wait_for_completion_or_kill(process, options.timeout)
+
+    # Lock release
     lock.release()
+
+
+if __name__ == "__main__":
+    main()
