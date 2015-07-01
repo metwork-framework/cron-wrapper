@@ -180,7 +180,7 @@ def main():
     else:
         wait_for_completion_or_kill(process, options.timeout)
 
-    # Lock release
+    # Lock release
     lock.release()
 
 
