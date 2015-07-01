@@ -87,6 +87,14 @@ def make_parser():
                       default="~/.bashrc")
     parser.add_option("-s", "--shell", dest="shell", help="full path of the "
                       "shell to use (default /bin/sh)")
+    parser.add_option("-n", "--nice", dest="nice", default=-99, type=int,
+                      help="'nice' value (from -20 (most favorable scheduling)"
+                      " to 19 (least favorable))")
+    parser.add_option("-i", "--ionice", dest="ionice", default=0, type=int,
+                      help="'ionice' class (1 for realtime, 2 for best-effort,"
+                      " 3 for idle)")
+    parser.add_option("--low", dest="low", default=False, action="store_true",
+                      help="short cut for '-i 3 -n 19' (minimum priority)")
     return parser
 
 
@@ -104,12 +112,15 @@ def execute_command(command, shell):
     return process
 
 
-def make_command(original_command, load_env, load_env_file):
+def make_command(original_command, load_env, load_env_file, nice, ionice):
+    command = ""
     if load_env:
-        command = "source %s >/dev/null 2>&1 ; %s" % (load_env_file,
-                                                      original_command)
-    else:
-        command = original_command
+        command = "source %s >/dev/null 2>&1 ; " % load_env_file
+    if nice != -99:
+        command += "nice -n %i " % nice
+    if ionice != 0:
+        command += "ionice -c %i " % ionice
+    command += original_command
     return command
 
 
@@ -136,6 +147,15 @@ def main():
     if len(args) == 0:
         usage()
         sys.exit(1)
+    if options.low and options.nice != -99:
+        parser.error("options low and nice are mutually exclusive")
+        sys.exit(1)
+    if options.low and options.ionice != 0:
+        parser.error("options low and ionice are mutually exclusive")
+        sys.exit(1)
+    if options.low:
+        options.nice = 19
+        options.ionice = 3
 
     # Random sleep
     random_sleep(options.random_sleep)
@@ -143,7 +163,7 @@ def main():
     # Command generation
     original_command = " ".join(args)
     command = make_command(original_command, options.load_env,
-                           options.load_env_file)
+                           options.load_env_file, options.nice, options.ionice)
 
     # Lock management
     command_hash = hashlib.md5(command).hexdigest()
