@@ -15,6 +15,7 @@ import hashlib
 import tempfile
 import os
 import fcntl
+import psutil
 
 
 class Lock(object):
@@ -132,11 +133,23 @@ def wait_for_completion_or_kill(process, timeout):
         if return_code is not None:
             # Process has terminated
             break
-        time.sleep(0.1)
+        time.sleep(1)
     if return_code is None:
         # timeout
-        print("timeout => kill -9", file=sys.stderr)
-        process.kill()
+        pid = process.pid
+        print("timeout => kill -9 %i" % pid, file=sys.stderr)
+        try:
+            kill_pid_tree(pid)
+        except:
+            pass
+
+
+def kill_pid_tree(pid):
+    parent = psutil.Process(pid)
+    for child in parent.children(recursive=True):
+        if child.is_running():
+            child.kill()
+    parent.kill()
 
 
 def main():
