@@ -179,12 +179,13 @@ def main():
                            options.load_env_file, options.nice, options.ionice)
 
     # Lock management
-    command_hash = hashlib.md5(command).hexdigest()
-    lock = Lock(command_hash)
-    if not lock.acquire():
-        print("can't acquire lock for executing %s => can be a normal "
-              "behaviour" % original_command)
-        sys.exit(0)
+    if options.lock:
+        command_hash = hashlib.md5(command).hexdigest()
+        lock = Lock(command_hash)
+        if not lock.acquire():
+            print("can't acquire lock for executing %s => can be a normal "
+                  "behaviour" % original_command)
+            sys.exit(0)
 
     # Command execution
     process = execute_command(command, options.shell)
@@ -194,7 +195,8 @@ def main():
         wait_for_completion_or_kill(process, options.timeout)
 
     # Lock release
-    lock.release()
+    if options.lock:
+        lock.release()
 
 
 if __name__ == "__main__":
