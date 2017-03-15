@@ -11,7 +11,7 @@ class TestUtils(TestCase):
         before = datetime.now()
         after = datetime.now() + timedelta(hours=2)
         delta = after - before
-        self.assertAlmostEqual(total_seconds(delta), 7200)
+        self.assertEquals(round(total_seconds(delta), 3), 7200)
 
     def test_lock(self):
         lock = Lock("foo")
