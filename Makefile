@@ -26,15 +26,15 @@ sdist: clean
 
 test:
 	flake8 .
-	cd tests && nosetests
+	cd tests && nosetests --exe
 
 coveralls:
-	cd tests && nosetests --with-coverage --cover-package=cronwrapper && ../.coveralls.sh
+	cd tests && nosetests --exe --with-coverage --cover-package=cronwrapper && ../.coveralls.sh
 
 upload:
 	python setup.py sdist register upload
 
 coverage:
-	cd tests && coverage run `which nosetests` && coverage html --include='*/cronwrapper/*' --omit='test_*'
+	cd tests && coverage run `which nosetests` --exe && coverage html --include='*/cronwrapper/*' --omit='test_*'
 
 release: test coverage clean upload clean 

@@ -24,7 +24,7 @@ class Lock(object):
     file_complete_path = None
 
     def __init__(self, name, temp_dir=None):
-        filename = hashlib.md5(name).hexdigest()
+        filename = hashlib.md5(name.encode()).hexdigest()
         if temp_dir is None:
             temp_dir = tempfile.gettempdir()
         self.file_complete_path = os.path.join(temp_dir, filename)
