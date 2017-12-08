@@ -180,7 +180,10 @@ def main():
 
     # Lock management
     if options.lock:
-        command_hash = hashlib.md5(command).hexdigest()
+        if sys.version_info[0] <= 2:
+            command_hash = hashlib.md5(command).hexdigest()
+        else:
+            command_hash = hashlib.md5(command.encode('utf8')).hexdigest()
         lock = Lock(command_hash)
         if not lock.acquire():
             print("can't acquire lock for executing %s => can be a normal "
