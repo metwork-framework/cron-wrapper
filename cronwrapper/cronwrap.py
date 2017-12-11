@@ -55,7 +55,7 @@ class Lock(object):
 
 
 def usage():
-    print("cronwrap.py [OPTIONS] command_to_execute")
+    print("cronwrap.py [OPTIONS] command_to_execute")
 
 
 def total_seconds(td):
