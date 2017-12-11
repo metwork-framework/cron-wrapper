@@ -49,7 +49,7 @@ class Lock(object):
             self.__file_handle.close()
             try:
                 os.unlink(self.file_complete_path)
-            except:
+            except Exception:
                 pass
             self.__file_handle = None
 
@@ -140,7 +140,7 @@ def wait_for_completion_or_kill(process, timeout):
         print("timeout => kill -9 %i" % pid, file=sys.stderr)
         try:
             kill_pid_tree(pid)
-        except:
+        except Exception:
             pass
 
 
