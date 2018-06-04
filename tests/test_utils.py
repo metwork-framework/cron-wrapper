@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from datetime import datetime, timedelta
-from cronwrapper.cronwrap import total_seconds, Lock
+import subprocess
 
 
-class TestUtils(TestCase):
+class Test(TestCase):
 
-    def test_total_seconds(self):
-        before = datetime.now()
-        after = datetime.now() + timedelta(hours=2)
-        delta = after - before
-        self.assertEquals(round(total_seconds(delta), 3), 7200)
+    def test_execute1(self):
+        cmd = "cronwrap.py --lock --load-env --low --timeout=10 sleep 1"
+        output = subprocess.check_output(cmd, shell=True)
+        self.assertEquals(output, b"")
 
-    def test_lock(self):
-        lock = Lock("foo")
-        self.assertTrue(lock.acquire())
-        lock.release()
-        lock = Lock("foo")
-        self.assertTrue(lock.acquire())
-        lock.release()
+    def test_execute2(self):
+        cmd = "cronwrap.py --lock --load-env --low --timeout=1 sleep 2"
+        try:
+            subprocess.check_output(cmd, shell=True)
+            raise Exception("CalledProcessError not raised")
+        except subprocess.CalledProcessError as e:
+            self.assertEquals(e.returncode, 12)
+            return

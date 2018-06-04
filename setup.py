@@ -7,12 +7,8 @@
 from setuptools import setup, find_packages
 DESCRIPTION = ("A cron job wrapper to add some missing features (locks, "
                "timeouts, random sleeps, env loading...")
+LONG_DESCRIPTION = DESCRIPTION
 
-try:
-    with open('PIP.rst') as f:
-        LONG_DESCRIPTION = f.read()
-except IOError:
-    LONG_DESCRIPTION = DESCRIPTION
 with open('pip-requirements.txt') as reqs:
     install_requires = [
         line for line in reqs.read().split('\n')

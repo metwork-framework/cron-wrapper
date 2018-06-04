@@ -10,8 +10,6 @@ clean:
 	rm -f *.pyc
 	cd tests && rm -f *.pyc
 	cd cronwrapper && rm -f *.pyc
-	cd tests && rm -Rf htmlcov 
-	rm -f .coverage tests/.coverage
 	rm -f MANIFEST
 	rm -Rf build
 	rm -Rf dist
@@ -28,13 +26,7 @@ test:
 	flake8 .
 	cd tests && nosetests --exe
 
-coveralls:
-	cd tests && nosetests --exe --with-coverage --cover-package=cronwrapper && ../.coveralls.sh
-
 upload:
 	python setup.py sdist register upload
 
-coverage:
-	cd tests && coverage run `which nosetests` --exe && coverage html --include='*/cronwrapper/*' --omit='test_*'
-
-release: test coverage clean upload clean 
+release: test clean upload clean
