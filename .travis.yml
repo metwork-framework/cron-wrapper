@@ -9,5 +9,4 @@ install:
     - python setup.py develop
 script: make test
 notifications:
-    - email: fabien.marty@gmail.com
-    - slack: metwork-framework:dAfaodV8XzpmqIcje2zE3jcn
+    slack: metwork-framework:dAfaodV8XzpmqIcje2zE3jcn
