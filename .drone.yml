@@ -1,0 +1,15 @@
+
+pipeline:
+  build:
+    image: python:${PYTHON_VERSION}
+    commands:
+      - python setup.py install
+      - pip install -r test-requirements.txt
+      - make test
+
+matrix:
+  PYTHON_VERSION:
+    - 2.7-wheezy
+    - 3.4-wheezy
+    - 3.5-jessie
+    - 3.6-jessie
