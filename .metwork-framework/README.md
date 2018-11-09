@@ -45,5 +45,5 @@ to run `slow_cleaning_command.sh slow_cleaning_command_option` every 10 minutes 
 - the user environement loaded before execution
 - with a (default) execution timeout of 3600 seconds
 - minimal system priority
-- with a lock to avoid several execution at the same time 
+- with a lock to avoid several execution at the same time (if the previous run is still alive)
 
