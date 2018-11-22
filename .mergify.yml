@@ -1,6 +1,6 @@
 pull_request_rules:
 
-- name: merge action
+- name: master branch
   actions:
     merge:
       method: rebase
@@ -8,5 +8,10 @@ pull_request_rules:
       strict: false
     delete_head_branch: {}
   conditions:
+    - base=master
+    - -merged
+    - -closed
     - label!=no-mergify
-    - label=Merge Now
+    - status-success=continuous-integration/drone/pr
+    - '#approved-reviews-by>=1'
+
