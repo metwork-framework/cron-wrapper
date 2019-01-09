@@ -1,20 +1,15 @@
-<a name=""></a>
-# (unreleased)
+<a name="unreleased"></a>
+## [Unreleased]
 
+### Fix
+- fix python2 compatibility
 
-### Bug Fixes
-
-* fix python2 compatibility ([6da9861](https://github.com/metwork-framework/cronwrapper/commit/6da9861))
-
-
+<a name="0.0.3"></a>
+## [0.0.3] - 2017-03-20
 
 <a name="0.0.2"></a>
-## [0.0.2](https://github.com/metwork-framework/cronwrapper/compare/0.0.1...0.0.2) (2017-03-15)
-
-
+## [0.0.2] - 2017-03-15
 
 <a name="0.0.1"></a>
-## 0.0.1 (2016-12-21)
-
-
+## [0.0.1] - 2016-12-21
 
