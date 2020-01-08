@@ -29,8 +29,7 @@ class DummyContextManager:
 
 def make_parser():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
-    parser.add_argument("COMMAND", help="command to execute")
-    parser.add_argument("COMMAND_ARG", help="argument for command", nargs='*')
+    parser.add_argument("COMMAND", help="command to execute (and its args)")
     parser.add_argument("--timeout", "-t",
                         help="command timeout (in seconds); "
                         "0 means no timeout; "
@@ -153,7 +152,7 @@ def main():
 
     # CLI parsing
     parser = make_parser()
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
     if args.low and args.nice != -99:
         parser.error("options low and nice are mutually exclusive")
         sys.exit(1)
@@ -173,7 +172,7 @@ def main():
     random_sleep(args.random_sleep)
 
     # Command generation
-    original_command = args.COMMAND + " " + " ".join(args.COMMAND_ARG)
+    original_command = args.COMMAND + " " + " ".join(unknown)
     command = make_command(original_command, args.load_env,
                            args.load_env_file, args.nice, args.ionice)
 
