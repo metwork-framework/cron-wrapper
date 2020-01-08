@@ -60,6 +60,10 @@ def make_parser():
                         "3 for idle)")
     parser.add_argument("--low", action="store_true",
                         help="short cut for '-i 3 -n 19' (minimum priority)")
+    parser.add_argument("--log-capture-to", default=None,
+                        help="if set, use log_proxy_wrapper to capture "
+                        "stdout/stderr to the given log file (with rotation "
+                        "and other features of log_proxy)")
     parser.add_argument("--wait-for-lock-timeout", "-w", default=1,
                         help="wait for lock timeout (default: 1 (second))",
                         type=int)
@@ -85,7 +89,8 @@ def execute_command(command, shell):
     return process
 
 
-def make_command(original_command, load_env, load_env_file, nice, ionice):
+def make_command(original_command, load_env, load_env_file, nice, ionice,
+                 log_capture_to):
     command = ""
     if load_env:
         command = "source %s >/dev/null 2>&1 ; " % load_env_file
@@ -93,6 +98,9 @@ def make_command(original_command, load_env, load_env_file, nice, ionice):
         command += "nice -n %i " % nice
     if ionice != 0:
         command += "ionice -c %i " % ionice
+    if log_capture_to is not None:
+        command += "log_proxy_wrapper --stdout %s " \
+            "--stderr STDOUT -- " % log_capture_to
     command += original_command
     return command
 
@@ -174,7 +182,7 @@ def main():
     # Command generation
     original_command = args.COMMAND + " " + " ".join(unknown)
     command = make_command(original_command, args.load_env,
-                           args.load_env_file, args.nice, args.ionice)
+                           args.load_env_file, args.nice, args.ionice, args.log_capture_to)
 
     # Lock creation
     if args.lock:
