@@ -182,7 +182,8 @@ def main():
     # Command generation
     original_command = args.COMMAND + " " + " ".join(unknown)
     command = make_command(original_command, args.load_env,
-                           args.load_env_file, args.nice, args.ionice, args.log_capture_to)
+                           args.load_env_file, args.nice, args.ionice,
+                           args.log_capture_to)
 
     # Lock creation
     if args.lock:
