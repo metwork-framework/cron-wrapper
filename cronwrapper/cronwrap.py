@@ -189,7 +189,8 @@ def main():
     if args.lock:
         command_hash = hashlib.md5(command.encode('utf8')).hexdigest()
         lock_path = os.path.join(tempfile.gettempdir(),
-                                 "cronwrapper_%s.lock" % command_hash)
+                                 "cronwrapper_%i_%s.lock" % (os.getuid(),
+                                                             command_hash))
         lock = FileLock(lock_path, timeout=1)
     else:
         lock = DummyContextManager()
