@@ -8,6 +8,7 @@
 
 
 ### Bug Fixes
+- about uid collisions in lock paths
 - fix some "--" handling in some special cases
 - fix python2 compatibility
 
