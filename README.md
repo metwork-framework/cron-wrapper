@@ -1,17 +1,14 @@
 # cronwrapper
 
-[//]: # (automatically generated from https://github.com/metwork-framework/resources/blob/master/cookiecutter/_%7B%7Bcookiecutter.repo%7D%7D/README.md)
+[//]: # (automatically generated from https://github.com/metwork-framework/github_organization_management/blob/master/common_files/README.md)
 
 **Status (master branch)**
-
 
 
 
 [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/cronwrapper/status.svg)](http://metwork-framework.org:8000/metwork-framework/cronwrapper)
 [![Maintenance](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)]()
 
-
-[//]: # (TABLE_OF_CONTENTS_PLACEHOLDER)
 
 
 
@@ -63,11 +60,6 @@ to run `slow_cleaning_command.sh slow_cleaning_command_option` every 10 minutes 
 - with a (default) execution timeout of 3600 seconds
 - minimal system priority
 - with a lock to avoid several execution at the same time (if the previous run is still alive)
-
-
-
-
-
 
 
 
