@@ -48,5 +48,9 @@ setup(
         'Topic :: System :: Distributed Computing',
         'Topic :: Software Development',
     ],
-    scripts=["cronwrapper/cronwrap.py"],
+    entry_points={
+        'console_scripts': [
+            'cronwrap = cronwrapper.cronwrap:main',
+        ],
+    },
 )
