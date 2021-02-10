@@ -7,7 +7,7 @@
 
 
 [![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/cronwrapper/status.svg)](http://metwork-framework.org:8000/metwork-framework/cronwrapper)
-[![Maintenance](https://raw.githubusercontent.com/metwork-framework/resources/master/badges/maintained.svg)](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)
+[![Maintenance](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)]()
 
 
 
