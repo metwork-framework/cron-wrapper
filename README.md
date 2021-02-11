@@ -1,4 +1,4 @@
-# cronwrapper
+# cron-wrapper
 
 [//]: # (automatically generated from https://github.com/metwork-framework/github_organization_management/blob/master/common_files/README.md)
 
@@ -6,7 +6,7 @@
 
 
 
-[![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/cronwrapper/status.svg)](http://metwork-framework.org:8000/metwork-framework/cronwrapper)
+[![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/cron-wrapper/status.svg)](http://metwork-framework.org:8000/metwork-framework/cron-wrapper)
 [![Maintenance](https://raw.githubusercontent.com/metwork-framework/resources/master/badges/maintained.svg)](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)
 
 
