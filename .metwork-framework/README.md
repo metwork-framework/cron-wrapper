@@ -2,10 +2,16 @@
 
 A cron job wrapper to add some missing features (locks, timeouts, random sleeps, env loading...).
 
+
+## Setup
+```shell
+pip install cron-wrapper
+```
+
 ## Usage
 
 ```
-Usage: cronwrap.py [options]
+Usage: cronwrap [options]
 
 Options:
   -h, --help            show this help message and exit
@@ -37,7 +43,7 @@ Options:
 In a user `crontab`:
 
 ```
-*/10 * * * * cronwrap.py --load-env --lock --low -- slow_cleaning_command.sh slow_cleaning_command_option
+*/10 * * * * cronwrap --load-env --lock --low -- slow_cleaning_command.sh slow_cleaning_command_option
 ```
 
 to run `slow_cleaning_command.sh slow_cleaning_command_option` every 10 minutes but with:
