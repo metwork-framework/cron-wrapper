@@ -6,7 +6,7 @@
 
 
 
-[![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/cron-wrapper/status.svg)](http://metwork-framework.org:8000/metwork-framework/cron-wrapper)
+[![GitHub CI](https://github.com/metwork-framework/cron-wrapper/workflows/CI/badge.svg?branch=master)](https://github.com/metwork-framework/cron-wrapper/actions?query=workflow%3ACI&branch=master)
 [![Maintenance](https://raw.githubusercontent.com/metwork-framework/resources/master/badges/maintained.svg)](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)
 
 
@@ -16,10 +16,16 @@
 
 A cron job wrapper to add some missing features (locks, timeouts, random sleeps, env loading...).
 
+
+## Setup
+```shell
+pip install cron-wrapper
+```
+
 ## Usage
 
 ```
-Usage: cronwrap.py [options]
+Usage: cronwrap [options]
 
 Options:
   -h, --help            show this help message and exit
@@ -51,7 +57,7 @@ Options:
 In a user `crontab`:
 
 ```
-*/10 * * * * cronwrap.py --load-env --lock --low -- slow_cleaning_command.sh slow_cleaning_command_option
+*/10 * * * * cronwrap --load-env --lock --low -- slow_cleaning_command.sh slow_cleaning_command_option
 ```
 
 to run `slow_cleaning_command.sh slow_cleaning_command_option` every 10 minutes but with:
