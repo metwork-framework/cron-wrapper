@@ -1,4 +1,4 @@
 psutil>=2.1.1
-filelock<=3.2.1 ; python_version < "3.5"
-filelock<=3.4.1 ; python_version < "3.6"
-filelock ; python_version > "3.6"
+filelock<=3.2.1 ; python_version < "3"
+filelock<=3.4.1 ; python_version >= "3.6",< "3.7"
+filelock ; python_version > "3.7"
