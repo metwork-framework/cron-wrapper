@@ -17,7 +17,7 @@ with open('pip-requirements.txt') as reqs:
 
 setup(
     name='cron-wrapper',
-    version="0.1.0",
+    version="0.1.1",
     author="Fabien MARTY",
     author_email="fabien.marty@gmail.com",
     url="https://github.com/metwork-framework/cron-wrapper",
