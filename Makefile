@@ -22,9 +22,13 @@ clean:
 sdist: clean
 	python setup.py sdist
 
-test:
+test_nose:
 	flake8 cronwrapper tests
 	cd tests && nosetests --exe
+
+test_nose2:
+	flake8 cronwrapper tests
+	cd tests && nose2
 
 upload:
 	python setup.py sdist register upload

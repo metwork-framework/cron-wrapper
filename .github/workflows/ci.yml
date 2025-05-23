@@ -28,9 +28,14 @@ jobs:
     - name: Install
       run: |
         python setup.py install
-    - name: Test
+    - name: Test nose
       # nose is not python >=3.10 compliant
-      #if: ${{ matrix.python-version != 3.10 && matrix.python-version != 3.11 && matrix.python-version != 3.12 && matrix.python-version != 3.13 }}
+      if: ${{ matrix.python-version == 3.8 || matrix.python-version == 3.9 }}
       run: |
         pip install -r test-requirements.txt
-        make test
+        make test_nose
+    - name: Test nose2
+      if: ${{ matrix.python-version != 3.8 && matrix.python-version != 3.9 }}
+      run: |
+        pip install -r test-requirements.txt
+        make test_nose2
