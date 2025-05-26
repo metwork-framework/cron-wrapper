@@ -17,7 +17,7 @@ with open('requirements.txt') as reqs:
 
 setup(
     name='cron-wrapper',
-    version="0.1.2",
+    version="0.1.3",
     author="Fabien MARTY",
     author_email="fabien.marty@gmail.com",
     url="https://github.com/metwork-framework/cron-wrapper",
